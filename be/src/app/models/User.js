@@ -4,26 +4,23 @@ mongoose.plugin(slug);
 
 const Schema = mongoose.Schema;
 
-const User = new Schema({
-    username: {
-        type: String,
-        require: true
+const User = new Schema(
+    {
+        username: { type: String, require: true },
+        slug: { type: String, slug: 'username', unique: true },
+        password: { type: String, require: true },
+        userInfo: {
+            name: { type: String },
+            email: { type: String },
+            birthday: { type: Date },
+            gender: { type: String },
+            phoneNumber: { type: Number },
+            organization: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Organization',
+            },
+        },
     },
-    name: {
-        type: String,
-        require: true
-    },
-    slug: { type: String, slug: 'username', unique: true },
-    password: {
-        type: String,
-        require: true
-    },
-    userInfo: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "UserInfo",
-    }
-},
-{
-    timestamps: true,
-})
+    { timestamps: true },
+);
 module.exports = mongoose.model('User', User);

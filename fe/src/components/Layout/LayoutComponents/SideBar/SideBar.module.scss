@@ -1,20 +1,36 @@
 .wrapper {
-    min-width: 256px;
-    min-height: 1000px;
-    background-color: blanchedalmond;
+    width: 110px;
+    height: 100%;
+    background-color: azure;
+    padding-left: 10px;
+    position: fixed;
+    top: 55px;
+    z-index: 1;
+    overflow-x: hidden;
+    left: 0;
 }
 .listActions {
-    padding: 20px 5px;
+    // padding: 20px 5px;
+    height: 80%;
+    justify-content: center;
     a {
         border: none;
-        font-size: 18px;
-        font-weight: 500;
+        border-radius: 15px;
+        height: 80px;
+        font-size: 14px;
+        font-weight: 450;
         padding: 10px;
-        svg {
-            min-width: 30px;
-        }
-        span {
-            margin-left: 15px;
+        div {
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            svg {
+                min-width: 25px;
+                color: #474646;
+            }
+            span {
+                color: #635c5c;
+            }
         }
     }
 }

@@ -8,7 +8,7 @@
 .prettierrc
 # testing
 /coverage
-
+.env
 # production
 /build
 

@@ -5,7 +5,7 @@ import clsx from 'clsx';
 function DefaultLayout({ children }) {
     return (
         <div>
-            {/* <Header /> */}
+            <Header />
             <div className="d-flex">
                 <SideBar />
                 <div className={clsx(styles.content)}>{children}</div>
