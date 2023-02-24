@@ -1,4 +1,3 @@
-//Function for post, get,delete, update data of component in Organization
 import api from '../api';
 import authServices from '../auth-services';
 
@@ -7,6 +6,7 @@ class OrganizationServices {
         this.user = authServices.getCurrentUser();
     }
     getSchedules() {
+        // console.log(this.user);
         return api.post('/organization/schedule', {
             orgId: this.user.org_id,
         });

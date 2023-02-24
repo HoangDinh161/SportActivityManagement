@@ -44,10 +44,12 @@ function Header() {
                         {val ? (
                             <>
                                 {!val.orgId && (
-                                    <NavLink
-                                        className={clsx(styles.boardLink)}
-                                        to="/organization/schedule"
-                                    >
+                                    <NavLink className={clsx(styles.boardLink)} to="/organization/create">
+                                        Create Your Own Organization
+                                    </NavLink>
+                                )}
+                                {val.orgId && (
+                                    <NavLink className={clsx(styles.boardLink)} to="/organization/dashboard">
                                         Go to Dashboard
                                     </NavLink>
                                 )}

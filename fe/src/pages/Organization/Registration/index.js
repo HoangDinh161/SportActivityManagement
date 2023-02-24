@@ -1,5 +1,2 @@
-export function Registration() {
-    return <h1>Registration</h1>;
-}
-
-export default Registration;
+export { Registration } from './Registration';
+export { Activity, NewActivity } from './Activity';

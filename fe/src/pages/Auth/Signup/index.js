@@ -48,11 +48,7 @@ export function SignUp() {
 
         setMessage('');
         setSuccessful(false);
-        if (
-            !vusername(username) &&
-            !validEmail(email) &&
-            !vpassword(password)
-        ) {
+        if (!vusername(username) && !validEmail(email) && !vpassword(password)) {
             //Do post user
             authServices.signup(username, name, email, password).then(
                 (response) => {
@@ -63,9 +59,7 @@ export function SignUp() {
                 },
                 (error) => {
                     const resMessage =
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
+                        (error.response && error.response.data && error.response.data.message) ||
                         error.message ||
                         error.toString();
 
@@ -83,14 +77,7 @@ export function SignUp() {
             <form onSubmit={handleRegister} ref={form}>
                 {message && (
                     <div className={clsx(styles.formGroup)}>
-                        <div
-                            className={
-                                successful
-                                    ? 'alert alert-success'
-                                    : 'alert alert-danger'
-                            }
-                            role="alert"
-                        >
+                        <div className={successful ? 'alert alert-success' : 'alert alert-danger'} role="alert">
                             {message}
                         </div>
                     </div>

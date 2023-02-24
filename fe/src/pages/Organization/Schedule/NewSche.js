@@ -30,9 +30,9 @@ export function NewSche() {
         orgServices.createSche(title, sportVal, teamNumVal, typeSche, orgId).then(
             (res) => {
                 console.log(res);
-                toast.success('Successfull', { autoClose: 3000 });
+                toast.success('Successfull', { autoClose: 2000 });
                 //navigate('/schedule/{ScheduleSlug}');
-                myVar = setTimeout(() => navigate('/organization/schedule'), 4000);
+                myVar = setTimeout(() => navigate('/organization/schedule'), 3000);
             },
             (error) => {
                 const resMessage =

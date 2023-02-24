@@ -24,9 +24,7 @@ function App() {
                     <Routes>
                         {publicRoutes.map((route, index) => {
                             let Page = route.component;
-                            let Layout = route.layout
-                                ? route.layout
-                                : LogLayout;
+                            let Layout = route.layout ? route.layout : LogLayout;
                             return (
                                 <Route
                                     key={index}
@@ -41,35 +39,23 @@ function App() {
                         })}
                         {privateRoutes.map((route, index) => {
                             let Page = route.component;
-                            let Layout = route.layout
-                                ? route.layout
-                                : DefaultLayout;
+                            let Layout = route.layout ? route.layout : DefaultLayout;
                             return (
                                 <Route
                                     key={index}
                                     path={route.path}
-                                    element={
-                                        <AuthPrivate
-                                            component={Page}
-                                            layout={Layout}
-                                        />
-                                    }
+                                    element={<AuthPrivate component={Page} layout={Layout} />}
                                 />
                             );
                         })}
                         {adminRoutes.map((route, index) => {
                             let Page = route.component;
-                            let Layout = DefaultLayout;
+                            let Layout = route.layout || DefaultLayout;
                             return (
                                 <Route
                                     key={index}
                                     path={route.path}
-                                    element={
-                                        <AuthAdmin
-                                            component={Page}
-                                            layout={Layout}
-                                        />
-                                    }
+                                    element={<AuthAdmin component={Page} layout={Layout} />}
                                 />
                             );
                         })}

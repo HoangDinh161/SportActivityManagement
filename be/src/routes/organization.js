@@ -10,11 +10,11 @@ const activityController = require('../app/controller/ActivityController');
 
 router.post('/schedule', [auth.verifyToken, auth.hasOrg], organizationController.showSchedules);
 router.post('/schedule/new', [auth.verifyToken, auth.hasOrg], activityController.createSchedule);
-router.get('/activity', [auth.verifyToken, auth.hasOrg], organizationController.showActivities);
-router.get(
+router.post('/activity', [auth.verifyToken, auth.hasOrg], organizationController.showActivities);
+router.post(
     '/registration',
     [auth.verifyToken, auth.hasOrg],
     organizationController.showRegistrations,
 );
-router.get('/member', [auth.verifyToken, auth.hasOrg], organizationController.showMembers);
+router.post('/member', [auth.verifyToken, auth.hasOrg], organizationController.showMembers);
 module.exports = router;
