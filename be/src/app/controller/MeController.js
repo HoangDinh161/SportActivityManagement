@@ -8,18 +8,21 @@ class MeController {
     //Show your registration activities to others organization
     //[GET]me/my-registrations
     showRegistrations(req, res, next) {
-        Registration.find({ user: req.body.id })
-            .populate([{ path: 'activity' }, { path: 'organization', select: 'name' }])
+        Registration.find({ user: req.params.userId })
+            .populate([
+                { path: 'program', select: 'sport title slug' },
+                { path: 'organization', select: 'name' },
+            ])
             .then((registrations) => {
-                res.json(multiToObject(registrations));
-            })
-            .catch(next);
+                console.log(registrations);
+                res.json(registrations);
+            });
     }
     //[GET]me/my-registrations/:id
     getRegistrationDetail(req, res, next) {
         Registration.findById(req.params.id)
             .populate([
-                { path: 'activity', select: 'name' },
+                { path: 'program', select: 'title' },
                 {
                     path: 'organization',
                     select: 'title user',
@@ -33,11 +36,22 @@ class MeController {
     }
     //Using info to build your own website
     showOrganization(req, res, next) {
-        Organization.findById(req.body.id)
-            .populate('user', 'userInfo.email userInfo.phoneNumber')
+        Organization.findById(req.params.orgId)
+            .populate('owner', 'userInfo.email userInfo.phone')
             .then((org) => {
                 res.json(singleToObject(org));
             });
+    }
+    updateOrganization(req, res) {
+        Organization.updateOne({ _id: req.params.orgId }, { ...req.body.data }).then(
+            (response, err) => {
+                if (err) {
+                    res.send({ message: err });
+                    return;
+                }
+                res.status(200).send(response);
+            },
+        );
     }
 }
 

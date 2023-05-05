@@ -1,45 +1,58 @@
 const mongoose = require('mongoose');
-const Schedule = require('../models/Schedule');
-const Activity = require('../models/Activity');
+const Program = require('../models/Program');
+// const Activity = require('../models/Activity');
 const Organization = require('../models/Organization');
 const Registration = require('../models/Registration');
-const { multiToObject, singleToObject } = require('../../util/moongoose');
 const User = require('../models/User');
 class OrganizationController {
     //Get info about Organization components
-    //[Get] me/stored/shedules
-    showSchedules(req, res) {
-        Schedule.find({ organization: req.body.orgId }).then((schedules, err) => {
+    //
+    showPrograms(req, res) {
+        Program.find({ organization: req.body.orgId }).then((programs, err) => {
             if (err) {
                 res.send({ message: err });
             }
-            res.json(schedules);
+            res.json(programs);
         });
     }
-    showActivities(req, res, next) {
-        Activity.find({ organization: req.body.orgId })
-            .then((activities) => {
-                res.json(multiToObject(activities));
-            })
-            .catch(next);
-    }
+    // showActivities(req, res, next) {
+    //     Activity.find({ organization: req.body.orgId })
+    //         .then((activities) => {
+    //             res.json(activities);
+    //         })
+    //         .catch(next);
+    // }
     showMembers(req, res, next) {
         Organization.findById({ _id: req.body.orgId })
-            .populate('userMem')
-            .select('members')
-            .then((members) => {
-                res.json(multiToObject(members));
+            .populate({ path: 'members.userMem' })
+            .then((org) => {
+                // let members = org.members;
+                // members.map((mem) => {
+                //     return { ...mem.userMem, ...mem.timeJoined };
+                // });
+
+                let nmems = org.members.map((mem) => {
+                    const { userInfo, username, _id: id, slug, ...rest } = mem.userMem;
+                    const timeJoined = mem.timeJoined.toLocaleDateString();
+                    let nmem = {
+                        ...userInfo,
+                        username,
+                        id,
+                        slug,
+                        timeJoined,
+                    };
+                    console.log(nmem);
+                    return nmem;
+                });
+                res.json(nmems);
             })
             .catch(next);
     }
     showRegistrations(req, res, next) {
         Registration.find({ organization: req.body.orgId })
-            .populate([
-                { path: 'user', select: 'name' },
-                { path: 'activity', select: 'title' },
-            ])
+            .populate([{ path: 'program', select: 'title' }])
             .then((registrations) => {
-                res.json(multiToObject(registrations));
+                res.json(registrations);
             })
             .catch(next);
     }
@@ -49,6 +62,7 @@ class OrganizationController {
             _id: new mongoose.Types.ObjectId(),
             ...req.body,
             subTitle: req.body.title,
+            publish: true,
         });
         newOrg.save((err, org) => {
             if (err) {
@@ -57,18 +71,16 @@ class OrganizationController {
                     error: err,
                 });
             }
-            User.updateOne({ _id: req.body.user }, { 'userInfo.organization': org._id }).exec(
-                (err, user) => {
-                    if (err) {
-                        console.log(err);
-                        return res.status(400).json({
-                            error: err,
-                        });
-                    }
-                    res.status(200).json(singleToObject(org));
-                    console.log('Create Organization Success!!!');
-                },
-            );
+            User.updateOne({ _id: req.body.owner }, { organization: org._id }).exec((err, user) => {
+                if (err) {
+                    console.log(err);
+                    return res.status(400).json({
+                        error: err,
+                    });
+                }
+                res.status(200).json(org);
+                console.log('Create Organization Success!!!');
+            });
         });
     }
     //Update

@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import styles from './SideBar.module.scss';
-
+import { memo } from 'react';
 import { NavList } from './NavList';
 function SideBar() {
     // console.log(123);
@@ -13,4 +13,4 @@ function SideBar() {
     );
 }
 
-export default SideBar;
+export default memo(SideBar);

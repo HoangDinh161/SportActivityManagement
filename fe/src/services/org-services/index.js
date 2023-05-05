@@ -2,34 +2,44 @@ import api from '../api';
 import authServices from '../auth-services';
 
 class OrganizationServices {
-    constructor() {
-        this.user = authServices.getCurrentUser();
-    }
-    getSchedules() {
-        // console.log(this.user);
-        return api.post('/organization/schedule', {
-            orgId: this.user.org_id,
+    getAllPrograms() {
+        // console.log(authServices.getCurrentUser());
+        return api.post('/organization/program', {
+            orgId: authServices.getCurrentUser().org_id,
         });
     }
-
+    getAllMembers() {
+        return api.post('/organization/member', {
+            orgId: authServices.getCurrentUser().org_id,
+        });
+    }
+    // getAllActivities() {
+    //     return api.post('/organization/activity', {
+    //         orgId: authServices.getCurrentUser().org_id,
+    //     });
+    // }
+    getAllRegistrations() {
+        return api.post('/organization/registration', {
+            orgId: authServices.getCurrentUser().org_id,
+        });
+    }
     //create new Organization
-    createNew(orgName, address) {
-        if (!this.user.org_id) {
+    createNewOrg(orgName, address) {
+        if (!authServices.getCurrentUser().org_id) {
             return api.post('/me/createOrg', {
-                user: this.user.id,
+                owner: authServices.getCurrentUser().id,
                 name: orgName,
                 address,
             });
         }
     }
-    //create new Schedule
-    createSche(title, sport, teamNumber, type, orgId) {
-        return api.post('/organization/schedule/new', {
-            title,
-            sport,
-            teamNumber,
-            type,
-            orgId,
+    getOrgInfo() {
+        return api.get('/me/myPage/' + authServices.getCurrentUser().org_id);
+    }
+    updateInfo(data) {
+        return api.patch('/me/myPage/' + authServices.getCurrentUser().org_id + '/update', {
+            orgId: authServices.getCurrentUser().org_id,
+            data,
         });
     }
 }

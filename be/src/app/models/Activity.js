@@ -19,17 +19,29 @@ const Activity = Schema(
             ref: 'Organization',
         },
         location: { type: String },
+        registrations: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Registration',
+            },
+        ],
+        regisDetail: {
+            title: { type: String, require: true },
+            email: { type: mongoose.Schema.Types.Boolean },
+            gender: { type: mongoose.Schema.Types.Boolean },
+            phone: { type: mongoose.Schema.Types.Boolean },
+            description: { type: String },
+            status: { type: mongoose.Schema.Types.Boolean },
+            quanlity: { type: Number },
+            priceName: { type: String },
+            price: { type: Number },
+            endDay: { type: Date },
+        },
         details: {
             startDate: { type: mongoose.Schema.Types.Date },
             endDate: { type: mongoose.Schema.Types.Date },
             startTime: { type: String },
             endTime: { type: String },
-            registrations: [
-                {
-                    type: mongoose.Schema.Types.ObjectId,
-                    ref: 'Registration',
-                },
-            ],
         },
     },
     {

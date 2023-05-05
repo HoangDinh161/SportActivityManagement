@@ -17,9 +17,9 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 app.use(morgan('combined'));
-app.get('/show', function (req, res, next) {
-    res.send('...');
-});
+// app.get('/show', function (req, res, next) {
+//     res.send('...');
+// });
 route(app);
 const db = require('./config/db');
 

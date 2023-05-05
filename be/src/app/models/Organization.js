@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 
 const Organization = new Schema(
     {
-        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
         name: { type: String, require: true },
         members: [
             {
@@ -19,6 +19,7 @@ const Organization = new Schema(
         ],
         slug: { type: String, slug: 'name', unique: true },
         address: { type: String },
+        tagline: { type: String },
         description: { type: String },
         publish: { type: mongoose.Schema.Types.Boolean },
     },

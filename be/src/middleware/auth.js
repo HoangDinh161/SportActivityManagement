@@ -40,6 +40,7 @@ const hasOrg = (req, res, next) => {
         next();
     });
 };
+
 const auth = { verifyToken, hasOrg };
 
 module.exports = auth;

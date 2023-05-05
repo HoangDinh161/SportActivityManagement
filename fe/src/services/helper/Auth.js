@@ -4,14 +4,14 @@ import { Navigate } from 'react-router-dom';
 export const AuthAdmin = ({ layout: Layout, component: Component }) => {
     const auth = authServices.getCurrentUser();
     const authAdmin = auth?.org_id;
-
-    return auth && authAdmin ? (
+    const LastComponent = Layout ? (
         <Layout>
             <Component />
         </Layout>
     ) : (
-        <Navigate to="/page/new" />
+        <Component />
     );
+    return auth && authAdmin ? LastComponent : <Navigate to="/page/new" />;
 };
 export const AuthPrivate = ({ layout: Layout, component: Component }) => {
     const auth = authServices.getCurrentUser();

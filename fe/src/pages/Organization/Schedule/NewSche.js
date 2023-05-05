@@ -3,8 +3,7 @@ import styles from './Schedule.module.scss';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { sports, teamNum } from '../../../services/helper/sport';
-import orgServices from '../../../services/org-services';
-import authServices from '../../../services/auth-services';
+import scheduleServices from '../../../services/org-services/schedule-services';
 import { eventBus } from '../../../services/helper';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,13 +11,11 @@ import 'react-toastify/dist/ReactToastify.css';
 export function NewSche() {
     const navigate = useNavigate();
     const [title, setTitle] = useState('');
-    const [sportVal, setSportVal] = useState('');
+    const [sportVal, setSportVal] = useState('Football');
     const [teamNumVal, setTeamNumVal] = useState(4);
-    const [typeSche, setTypeSche] = useState('');
+    const [typeSche, setTypeSche] = useState('tournament');
     let myVar;
-    // const navigateTo = () => {
-    //     navigate('/organization/schedule');
-    // };
+
     useEffect(() => {
         return () => {
             clearTimeout(myVar);
@@ -26,12 +23,11 @@ export function NewSche() {
     }, [myVar]);
     const handleCreate = (e) => {
         e.preventDefault();
-        const orgId = authServices.getCurrentUser().org_id;
-        orgServices.createSche(title, sportVal, teamNumVal, typeSche, orgId).then(
+        console.log(title, sportVal, typeSche);
+        scheduleServices.createSche(title, sportVal, typeSche).then(
             (res) => {
                 console.log(res);
-                toast.success('Successfull', { autoClose: 2000 });
-                //navigate('/schedule/{ScheduleSlug}');
+                toast.success('Create Schedule Successfull', { autoClose: 2000 });
                 myVar = setTimeout(() => navigate('/organization/schedule'), 3000);
             },
             (error) => {
@@ -49,7 +45,7 @@ export function NewSche() {
 
     return (
         <>
-            <h2>New schedule</h2>
+            <h2>New program</h2>
             {/* <p>You can see your schedule</p> */}
             <div>
                 <form onSubmit={handleCreate}>
@@ -76,14 +72,14 @@ export function NewSche() {
                         >
                             {sports.map((sport, index) => {
                                 return (
-                                    <option key={index} value={sport}>
-                                        {sport}
+                                    <option key={index} value={sport.name}>
+                                        {sport.name}
                                     </option>
                                 );
                             })}
                         </select>
                     </div>
-                    <div className={clsx(styles.formGroup)}>
+                    {/* <div className={clsx(styles.formGroup)}>
                         <label htmlFor="teamNumber">Number of Teams</label>
                         <select
                             name="teamNumber"
@@ -99,9 +95,9 @@ export function NewSche() {
                                 );
                             })}
                         </select>
-                    </div>
+                    </div> */}
                     <div className={clsx(styles.formGroup)}>
-                        <label htmlFor="typeSchedule">Type of Schedule</label>
+                        <label htmlFor="typeSchedule">Type of Program</label>
                         <select
                             name="typeSchedule"
                             className="form-select"
@@ -109,14 +105,18 @@ export function NewSche() {
                             onChange={(e) => setTypeSche(e.target.value)}
                             required
                         >
-                            <option value="Round Robin">Round Robin</option>
-                            <option value="Single Elimination">Single Elimination</option>
-                            <option value="Double Elimination">Double Elimination</option>
+                            <option value="tournament">Tournament</option>
+                            <option value="league">League</option>
+                            <option value="camp">Camp</option>
+                            <option value="class">Class</option>
+                            <option value="training">Training</option>
+                            <option value="event">Event</option>
+                            <option value="club">Club</option>
                         </select>
                     </div>
                     <div className={clsx(styles.formGroup)}>
                         <button className="btn btn-success" type="submit">
-                            Create Schedule
+                            Create Program
                         </button>
                     </div>
                 </form>

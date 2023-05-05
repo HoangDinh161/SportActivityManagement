@@ -51,6 +51,9 @@ function App() {
                         {adminRoutes.map((route, index) => {
                             let Page = route.component;
                             let Layout = route.layout || DefaultLayout;
+                            if (route.type === '1') {
+                                Layout = undefined;
+                            }
                             return (
                                 <Route
                                     key={index}

@@ -16,3 +16,41 @@
 .boardLink:hover {
     color: coral;
 }
+.bg {
+    color: rgb(65, 142, 65);
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+.bg:hover {
+    color: rgb(40, 182, 40);
+}
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+.bgNavText {
+    background-color: white;
+}
+.navBox {
+    box-shadow: 0 3px 3px 0 rgb(0 0 0 / 5%), 0 3px 8px 0 rgb(0 0 0 / 5%);
+}
+.listMenu {
+    padding: 0;
+    border-radius: 0;
+    left: -70px !important;
+    li:hover {
+        background-color: rgb(234, 247, 250);
+    }
+    // li:first-child {
+    //     padding: 5px 0;
+    //     font-size: 1.15rem;
+    //     text-align: center;
+    //     border-bottom: 0.5px solid gray;
+    // }
+    a {
+        color: cadetblue;
+        font-weight: 500;
+    }
+}

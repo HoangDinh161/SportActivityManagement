@@ -1,0 +1,128 @@
+.main {
+    height: 100vh;
+}
+.title {
+    margin-top: 50px;
+    // height: 100%;
+    text-align: center;
+    img {
+        width: 450px;
+        height: 250px;
+    }
+    h1 {
+        font-weight: 700;
+        font-size: 4rem;
+    }
+    p {
+        font-size: 1.75rem;
+        font-weight: 300;
+    }
+}
+.menu {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    width: 95%;
+    border-bottom: solid 1px rgb(217, 208, 208);
+    a {
+        text-decoration: none;
+        font-size: 1.15rem;
+        color: rgb(48, 126, 126);
+        font-weight: 500;
+    }
+    a:nth-child(2) {
+        margin-left: 20px;
+        text-align: center;
+    }
+}
+.aboutInfo {
+    color: rgb(48, 126, 126);
+    .aboutTitle {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        border-bottom: solid 1px rgb(217, 208, 208);
+        font-size: 1.15rem;
+
+        font-weight: 500;
+    }
+    .aboutContent {
+        margin-top: 15px;
+        .orgInfo {
+            p:first-child {
+                font-weight: 600;
+                margin: 0;
+            }
+            p:nth-child(2) {
+                font-weight: 350;
+            }
+        }
+        .address {
+            p:first-child {
+                font-weight: 600;
+                margin-bottom: 0;
+            }
+        }
+        .contact {
+            p {
+                margin-bottom: 5px;
+                span:nth-child(2) {
+                    margin-left: 5px;
+                }
+            }
+            p:first-child {
+                font-weight: 600;
+            }
+        }
+    }
+}
+.pageContent {
+    margin-top: 50px;
+}
+.detailInner {
+    width: 90%;
+    margin-top: 20px;
+    .outside {
+        margin-bottom: 15px;
+        background-color: #f4f6f6;
+        padding: 15px;
+        .content {
+            background-color: white;
+            padding: 15px 10px;
+            .programIntro {
+                h5 {
+                    margin-bottom: 0;
+                }
+                a {
+                    text-decoration: none;
+                    color: rgb(92, 92, 157);
+                }
+                a:hover {
+                    color: blue;
+                }
+                p {
+                    margin: 0;
+                    font-size: 0.85rem;
+                }
+                margin-bottom: 20px;
+                .displayTime {
+                    margin-top: 15px;
+                }
+            }
+            .btnRegister {
+                button {
+                    float: right;
+                }
+            }
+            .priceOption {
+                width: 40%;
+                border-top: solid 1px rgb(217, 208, 208);
+                p {
+                    margin: 0;
+                    font-size: 0.75rem;
+                }
+            }
+        }
+    }
+}

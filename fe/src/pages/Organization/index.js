@@ -1,5 +1,6 @@
 export { Schedule, NewSche, ScheDetail } from './Schedule';
-export { Registration, Activity, NewActivity } from './Registration';
+export { Registration } from './Registration';
 export { NewOrgnization } from './NewOrg';
-export { Member } from './Member';
+export { Member, AddMember } from './Member';
 export { Dashboard } from './Dashboad';
+export { WebManage } from './WebManage';

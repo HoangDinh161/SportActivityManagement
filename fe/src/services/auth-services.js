@@ -27,13 +27,16 @@ class AuthService {
     }
 
     getCurrentUser() {
-        const user = TokenService.getUser();
-        // if (user) {
-        //     const { accessToken, refreshToken, ...currentUser } = user;
-        //     return currentUser;
-        // }
-        return user;
+        return TokenService.getUser();
     }
+    // getUserInfo() {
+    //     const id = TokenService.getUser().id;
+    //     return api.post('/user/showUserInfo', { id });
+    // }
+    // updateUser(data) {
+    //     const id = TokenService.getUser().id;
+    //     return api.patch('/user/editUser', { id, userInfo: data });
+    // }
 }
 
 export default new AuthService();

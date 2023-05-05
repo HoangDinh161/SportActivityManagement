@@ -4,6 +4,7 @@ const User = require('../models/User');
 const RefreshToken = require('../models/RefreshToken');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
+const Organization = require('../models/Organization');
 
 class AuthController {
     logIn(req, res) {
@@ -23,17 +24,19 @@ class AuthController {
                     message: 'Wrong Password!',
                 });
             }
-            let token = jwt.sign({ id: user.id }, config.accessTokenKey, {
+            let token = jwt.sign({ id: user._id }, config.accessTokenKey, {
                 expiresIn: config.jwtExpiration,
             });
+            console.log(user);
 
             let refreshToken = await RefreshToken.createToken(user);
 
             res.status(200).send({
                 id: user._id,
                 username: user.username,
+                name: user.userInfo.name,
                 email: user.userInfo.email,
-                org_id: user.userInfo.organization,
+                org_id: user.organization,
                 accessToken: token,
                 refreshToken: refreshToken,
             });

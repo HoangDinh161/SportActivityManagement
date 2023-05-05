@@ -1,0 +1,67 @@
+.wrapper {
+    margin-top: 50px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 120vh;
+    h2 {
+        font-weight: 700;
+        font-size: 2.75rem;
+    }
+}
+.searchAction {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    input,
+    select {
+        border-radius: 0;
+    }
+    select {
+        width: 150px;
+    }
+}
+.result {
+    .orgInfo {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        background-color: white;
+        padding: 10px 15px;
+        width: 70%;
+        margin-bottom: 15px;
+        h4 {
+            color: rgb(207, 72, 180);
+            cursor: pointer;
+        }
+        p {
+            font-size: 0.85rem;
+            margin: 0;
+
+            span {
+                color: rgb(152, 215, 57);
+            }
+        }
+    }
+    .proInfo {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        background-color: white;
+
+        width: 70%;
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: row;
+        img {
+            width: 110px;
+            height: 100px;
+        }
+        .proDetail {
+            padding: 10px 15px;
+            h4 {
+                //color: rgb(47, 77, 228);
+                cursor: pointer;
+            }
+            p {
+                font-size: 0.85rem;
+                margin: 0;
+            }
+        }
+    }
+}

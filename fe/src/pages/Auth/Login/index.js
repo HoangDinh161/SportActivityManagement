@@ -32,14 +32,12 @@ export function LogIn() {
         setLoading(true);
         if (username.length > 0 && !vpassword(password)) {
             authServices.login(username, password).then(
-                () => {
+                (res) => {
                     navigate('/home');
                 },
                 (error) => {
                     const resMessage =
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
+                        (error.response && error.response.data && error.response.data.message) ||
                         error.message ||
                         error.toString();
 
@@ -95,14 +93,8 @@ export function LogIn() {
                     </p>
                 </div>
                 <div className={clsx(styles.formGroup)}>
-                    <button
-                        className="btn btn-block"
-                        disabled={loading}
-                        type="submit"
-                    >
-                        {loading && (
-                            <span className="spinner-border spinner-border-sm"></span>
-                        )}
+                    <button className="btn btn-block" disabled={loading} type="submit">
+                        {loading && <span className="spinner-border spinner-border-sm"></span>}
                         <span>Login</span>
                     </button>
                 </div>

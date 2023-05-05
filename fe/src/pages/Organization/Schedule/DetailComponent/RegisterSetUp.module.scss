@@ -1,0 +1,83 @@
+.requireOption {
+    margin: 10px 0;
+    position: relative;
+}
+.contactInfo {
+    margin: 10px 0;
+    width: 55%;
+    .inputContact {
+        border: 1px solid black;
+        padding: 25px 10px;
+        label {
+            font-weight: 500;
+            color: cadetblue;
+            font-size: 14px;
+        }
+        input {
+            border-radius: 0;
+            font-size: 14px;
+        }
+    }
+}
+.roleOption {
+    margin: 10px 0;
+}
+.timeRegister {
+    margin: 10px 0;
+    .inputGroup {
+        display: flex;
+        flex-direction: row;
+        div {
+            padding: 10px;
+            label {
+                min-width: 80px;
+                font-size: 14px;
+                font-weight: 500;
+            }
+            input {
+                min-width: 250px;
+                border-radius: 0;
+            }
+        }
+    }
+}
+.priceOption {
+    //width: 700px;
+    .btnAdd {
+        cursor: pointer;
+    }
+    .priceDetail {
+        border-bottom: 1px solid rgb(217, 208, 208);
+        text-align: center;
+    }
+
+    .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        button {
+            border: none;
+            background-color: white;
+            color: red;
+        }
+        button:hover {
+            font-size: 120%;
+        }
+    }
+}
+.submitBtn {
+    margin-top: 50px;
+    button {
+        border-radius: 0;
+        background-color: rgb(77, 171, 77);
+        border: none;
+        width: 80px;
+    }
+}
+.switch:checked {
+    background-color: green;
+    border-color: green;
+}
+.switch:disabled {
+    opacity: 0.4;
+}

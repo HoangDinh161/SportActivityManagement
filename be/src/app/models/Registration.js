@@ -9,16 +9,21 @@ const Registration = Schema(
             ref: 'User',
             require: true,
         },
-        activity: {
+        program: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Activity',
+            ref: 'Program',
             require: true,
         },
         organization: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Organization',
         },
-        code: { type: String },
+        userInfo: {},
+        role: { type: String },
+        team: { type: String },
+        priceOption: { type: String },
+        status: { type: mongoose.Schema.Types.Boolean },
+        note: { type: String },
     },
     {
         timestamps: true,

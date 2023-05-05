@@ -8,6 +8,13 @@ router.use(function (req, res, next) {
     next();
 });
 router.post('/createOrg', [auth.verifyToken], organizationController.createOrg);
+router.get('/myPage/:orgId', [auth.verifyToken], meController.showOrganization);
+router.patch(
+    '/myPage/:orgId/update',
+    [auth.verifyToken, auth.hasOrg],
+    meController.updateOrganization,
+);
+router.get('/my-activities/:userId', meController.showRegistrations);
 // router.get('/stored/schedules', meController.showSc;
 // router.get('/stored/activities', meController.showActivites);
 // router.get('/stored/members', meController.showMembers);

@@ -43,7 +43,7 @@ export function NewOrgnization() {
             setErrAddr(true);
         } else setErrAddr(false);
         if (name && address) {
-            orgServices.createNew(name, address).then(
+            orgServices.createNewOrg(name, address).then(
                 (res) => {
                     const user = {
                         ...authServices.getCurrentUser(),
@@ -51,13 +51,11 @@ export function NewOrgnization() {
                     };
                     tokenServices.setUser(user);
                     toast('Success!');
-                    navigate('/home');
+                    navigate('/organization/dashboard');
                 },
                 (error) => {
                     const resMessage =
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
+                        (error.response && error.response.data && error.response.data.message) ||
                         error.message ||
                         error.toString();
                     toast.error(resMessage, {
@@ -72,7 +70,7 @@ export function NewOrgnization() {
     };
 
     return (
-        <div className={clsx(styles.innder)}>
+        <div className={clsx(styles.inner)}>
             <h1>Create Your Organization</h1>
             <p>Tell us about your new Organization...</p>
             <div>

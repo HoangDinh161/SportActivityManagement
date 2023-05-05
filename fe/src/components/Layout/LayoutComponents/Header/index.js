@@ -1,9 +1,11 @@
 // import { clsx as cx } from 'clsx';
 import clsx from 'clsx';
 import styles from './Header.module.scss';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import authServices from '../../../../services/auth-services';
+import orgServices from '../../../../services/org-services';
+import { eventBus } from '../../../../services/helper';
 function Header() {
     const logOut = () => {
         console.log(123);
@@ -13,21 +15,45 @@ function Header() {
     const [val, setVal] = useState(null);
     useEffect(() => {
         const user = authServices.getCurrentUser();
-        // console.log(user);
+        //console.log(user);
+
         if (user) {
-            setVal({
-                userId: user.id,
-                name: user.name,
-                orgId: user.org_id,
-            });
+            if (user.org_id) {
+                orgServices.getOrgInfo(user.org_id).then(
+                    (res) => {
+                        //console.log(res.data);
+                        const orgSlug = res.data.slug;
+
+                        setVal({
+                            userId: user.id,
+                            name: user.name,
+                            orgId: user.org_id,
+                            orgSlug,
+                        });
+                    },
+                    (error) => {
+                        console.log(error);
+                        const resMessage =
+                            (error.response && error.response.data && error.response.data.message) ||
+                            error.message ||
+                            error.toString();
+                        console.log(resMessage);
+                        if (error.response && error.response.status === 403) {
+                            eventBus.dispatch('logout');
+                        }
+                    },
+                );
+            } else {
+                setVal({ userId: user.id, name: user.name });
+            }
         }
     }, []);
     return (
         <div>
-            <nav className="navbar navbar-expand-lg navbar-light fixed-top bg-light">
+            <nav className={clsx('navbar navbar-expand-lg navbar-light fixed-top nav-bg', styles.navBox)}>
                 <div className="container-fluid">
-                    <NavLink className="navbar-brand" to="/">
-                        NamePage
+                    <NavLink className={clsx(styles.bg)} to="/">
+                        SportManagement
                     </NavLink>
                     <button
                         className="navbar-toggler float-end"
@@ -40,7 +66,10 @@ function Header() {
                     >
                         <span className="navbar-toggler-icon"></span>
                     </button>
-                    <div className="collapse navbar-collapse justify-content-end" id="navbarText">
+                    <div
+                        className={clsx(styles.bgNavText, 'collapse navbar-collapse justify-content-end')}
+                        id="navbarText"
+                    >
                         {val ? (
                             <>
                                 {!val.orgId && (
@@ -61,25 +90,30 @@ function Header() {
                                         data-bs-toggle="dropdown"
                                         aria-expanded="false"
                                     >
-                                        Avartar{/* avartar for user */}
+                                        <img className={clsx(styles.avatar)} src="/assets/user.png" />
+                                        {/* avartar for user */}
                                     </NavLink>
                                     <ul
-                                        className="dropdown-menu"
+                                        className={clsx(styles.listMenu, 'dropdown-menu')}
                                         aria-labelledby="navbarDropdown"
-                                        style={{ left: '-80px' }}
                                     >
+                                        {/* <li className="nav-item">{val.name}</li> */}
+
                                         <li className="nav-item">
-                                            <NavLink className="nav-link" to="">
-                                                Profile
+                                            <NavLink className="nav-link" to="/me/profile">
+                                                My Profile
                                             </NavLink>
                                         </li>
+                                        {val.orgId && (
+                                            <li className="nav-item">
+                                                <NavLink className="nav-link" to="/me/my-registrations">
+                                                    My Registrations
+                                                </NavLink>
+                                            </li>
+                                        )}
+
                                         <li className="nav-item">
-                                            <NavLink className="nav-link" to="">
-                                                My Registrations
-                                            </NavLink>
-                                        </li>
-                                        <li className="nav-item">
-                                            <NavLink className="nav-link" to="">
+                                            <NavLink className="nav-link" to={'/page/' + val.orgSlug}>
                                                 My Page
                                             </NavLink>
                                         </li>
@@ -108,4 +142,4 @@ function Header() {
     );
 }
 
-export default Header;
+export default memo(Header);

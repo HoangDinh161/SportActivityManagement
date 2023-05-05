@@ -14,11 +14,11 @@ const User = new Schema(
             email: { type: String },
             birthday: { type: Date },
             gender: { type: String },
-            phoneNumber: { type: Number },
-            organization: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Organization',
-            },
+            phone: { type: String },
+        },
+        organization: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Organization',
         },
     },
     { timestamps: true },

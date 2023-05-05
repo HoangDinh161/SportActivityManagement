@@ -1,30 +1,21 @@
-const Schedule = require('../models/Schedule');
-const Activity = require('../models/Activity');
 const Organization = require('../models/Organization');
 const { multiToObject } = require('../../util/moongoose');
+const Program = require('../models/Program');
 
 class SearchController {
-    showAllPublishActivities(req, res, next) {
-        function getAllSchedule() {
-            return Schedule.find({ publish: true }).populate('organization', 'name');
-        }
-        function getAllActivity() {
-            return Activity.find({ publish: true }).populate('organization', 'name');
-        }
-        Promise.all([getAllActivity(), getAllSchedule()])
-            .then((activities, schedules) => {
-                res.json({
-                    activities: multiToObject(activities),
-                    schdules: multiToObject(schedules),
-                });
+    showAllPublishPrograms(req, res, next) {
+        Program.find({ publish: true })
+            .populate('organization', 'name address slug')
+            .then((programs) => {
+                res.json(programs);
             })
             .catch(next);
     }
-    showAllPublishOrganization(req, res, next) {
+    showAllPublishOrganizations(req, res, next) {
         Organization.find({ publish: true })
-            .populate('user', 'userInfo.email')
+            .populate('owner', 'userInfo.name')
             .then((organizations) => {
-                res.json(multiToObject(organizations));
+                res.json(organizations);
             })
             .catch(next);
     }

@@ -1,24 +1,23 @@
 import api from '../api';
 
 class MemberService {
-
-    getAllMember(id) {
-        return api.post(/organization/member, {
-            orgId: id
-        })
+    constructor() {
+        this.url = '/organization/member/';
     }
-    getDetailMember(slug) {
-        return api.get(/organization/member/{slug})
+    getDetailMember(id) {
+        let path = this.url + id;
+        return api.get(path);
     }
     addMember(name, email) {
-        return api.post(/organization/member/add, {
-            name, email
-        })
+        return api.post(url + 'add', {
+            name,
+            email,
+        });
     }
     deleteMember(memId) {
-        return api.delete(/organization/member/destroy, {
-            _id: memId
-        })
+        return api.delete(url + 'destroy', {
+            _id: memId,
+        });
     }
 }
 

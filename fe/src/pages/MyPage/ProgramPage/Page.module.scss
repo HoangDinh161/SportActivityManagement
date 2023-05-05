@@ -1,0 +1,292 @@
+.inner {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 120vh;
+    margin-top: 20px;
+}
+//for Program Page
+.programTitle {
+    margin-top: 30px;
+    //border-bottom: solid 1px rgb(217, 208, 208);
+    .programMenu {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        border-bottom: solid 1px rgb(217, 208, 208);
+        a {
+            text-decoration: none;
+            font-size: 1.15rem;
+            color: rgb(48, 126, 126);
+            font-weight: 500;
+        }
+        a:nth-child(2) {
+            margin-left: 20px;
+            text-align: center;
+        }
+    }
+}
+.title {
+    border-bottom: solid 1px rgb(217, 208, 208);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+//for profile
+.registration {
+    margin-top: 20px;
+    // .regisTitle {
+    //     border-bottom: solid 1px rgb(217, 208, 208);
+    //     font-size: 0.9rem;
+    //     font-weight: 500;
+    // }
+    .outside {
+        background-color: #f4f6f6;
+        padding: 15px;
+        margin-top: 10px;
+        .inside {
+            background-color: white;
+            margin: 5px;
+            padding: 15px 10px;
+            .regisDetail {
+                p {
+                    margin: 0;
+                    font-size: 0.8rem;
+                }
+                ul {
+                    padding: 0;
+                    display: flex;
+                    flex-direction: column;
+                    li {
+                        list-style: none;
+                        font-size: 0.75rem;
+                    }
+                }
+            }
+            .btnRegister {
+                button {
+                    float: right;
+                }
+            }
+        }
+    }
+}
+.details {
+    margin-top: 10px;
+    // .detailTitle {
+    //     border-bottom: solid 1px rgb(217, 208, 208);
+
+    //     font-weight: 500;
+    // }
+    .detailsContent {
+        .detailsChild {
+            margin-top: 5px;
+            color: rgb(0, 0, 0);
+            p:first-child {
+                font-weight: 500;
+                margin: 0;
+                font-size: 0.8rem;
+            }
+            p:nth-child(2) {
+                font-style: italic;
+                padding: 10px;
+                margin: 0;
+                color: black;
+                font-weight: 400;
+            }
+        }
+    }
+}
+.description {
+    .desContent {
+        margin-top: 20px;
+        min-height: 150px;
+        padding: 20px;
+        font-size: 1.25rem;
+        font-style: italic;
+        font-weight: 350;
+        background-color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+}
+.moreInfo {
+    margin-top: 30px;
+    .infoTitle {
+        border-bottom: solid 1px rgb(217, 208, 208);
+        color: rgb(48, 126, 126);
+        font-size: 1.05rem;
+        font-weight: 500;
+    }
+    .linkPage {
+        padding: 15px;
+        a {
+            text-decoration: none;
+            color: rgb(215, 215, 40);
+        }
+    }
+}
+//for schedule
+.canlanders {
+    margin-top: 15px;
+    //width: 70%;
+    font-size: 14px;
+    .dayTitle {
+        background-color: rgb(241, 217, 217);
+        padding-left: 5px;
+        margin-left: 3px;
+        color: rgb(245, 24, 24);
+        font-weight: 550;
+    }
+    .dayStart {
+        width: 60px;
+        padding: 0 5px;
+        text-align: center;
+        color: #60656c;
+    }
+    .dayContent {
+        min-height: 80px;
+        display: flex;
+        align-items: center;
+        border-bottom: solid 1px rgb(217, 208, 208);
+        border-left: solid 8px rgb(171, 142, 142);
+        font-weight: 500;
+        color: #acb7c6;
+        padding: 5px 0;
+
+        .detail {
+            display: flex;
+            flex-direction: column;
+
+            .team {
+                font-size: 18px;
+                span {
+                    font-weight: bold;
+                }
+                span:first-child {
+                    color: rgb(17, 109, 17);
+                }
+                span:nth-child(2) {
+                    color: rgb(129, 30, 187);
+                }
+            }
+            .subDetail {
+                font-weight: bold;
+                font-size: 12px;
+            }
+            .note {
+                font-style: italic;
+                font-size: 13px;
+            }
+        }
+        .location {
+            color: rgb(160, 140, 89);
+            font-style: italic;
+            font-weight: 550;
+            //width: 40%;
+            //float: right;
+            text-align: right;
+            span {
+                margin-right: 20px;
+            }
+        }
+    }
+    // .editScore {
+    //     margin: 10px 0;
+    //     padding: 10px 15px;
+    //     border: solid 1px rgb(217, 208, 208);
+    //     .inputScore {
+    //         display: flex;
+    //         align-items: center;
+    //         label {
+    //             font-size: 16px;
+    //             min-width: 60px;
+    //         }
+    //         input {
+    //             border-radius: 0;
+    //             margin-left: 10px;
+    //             height: 35px;
+    //             width: 70px;
+    //         }
+    //         margin-bottom: 5px;
+    //     }
+    //     .btnGroup {
+    //         margin-top: 13px;
+    //         button {
+    //             border-radius: 0;
+    //         }
+    //         button:nth-child(2) {
+    //             margin-left: 10px;
+    //         }
+    //     }
+    // }
+    .eventContent {
+        min-height: 80px;
+        display: flex;
+        align-items: center;
+        border-bottom: solid 1px rgb(217, 208, 208);
+        border-left: solid 8px rgb(148, 248, 115);
+        font-weight: 500;
+        color: #acb7c6;
+        padding: 5px 0;
+        .eventType {
+            font-size: 1rem;
+            width: 100px;
+            height: 30px;
+            color: white;
+            background-color: rgb(235, 235, 19);
+            border-radius: 5px;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+        }
+        .detail {
+            padding-left: 20px;
+            display: flex;
+            flex-direction: column;
+
+            span:nth-child(1) {
+                color: black;
+                font-size: 1.15rem;
+                font-weight: bold;
+            }
+            span:nth-child(3) {
+                font-style: italic;
+                font-size: 0.85rem;
+                font-weight: 400;
+            }
+        }
+        .location {
+            text-align: right;
+            font-weight: 550;
+            span {
+                margin-right: 20px;
+            }
+        }
+    }
+}
+//for RegisterForm
+.regisTitle {
+    margin-top: 80px;
+    p {
+        font-size: 1.5rem;
+        font-weight: 300;
+    }
+}
+.formContent {
+    margin-top: 50px;
+    .formInput {
+        margin-top: 15px;
+        input,
+        select,
+        optiom,
+        textarea {
+            border-radius: 0;
+        }
+        button {
+            width: 100%;
+            border-radius: 0;
+            margin-top: 20px;
+            font-size: 1.25rem;
+        }
+    }
+}
