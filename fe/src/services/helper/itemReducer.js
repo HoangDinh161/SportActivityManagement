@@ -83,3 +83,23 @@ export const convertDateTimeToLocaleString = (day, time = '') => {
         return { date: nDate.toLocaleDateString('vi-en', optionsDate) };
     }
 };
+export const compareDate = (day1, time1 = '', day2 = '', time2 = '') => {
+    let day = Date.now();
+    let convertDay1 = day1.split('T')[0];
+    let date1, convertDay2, date2;
+    if (time1) {
+        let nDate1 = new Date(convertDay1 + ' ' + time1);
+        date1 = nDate1.getTime();
+    }
+    if (day2) {
+        convertDay2 = day2.split('T')[0];
+        if (time2) {
+            let nDate2 = new Date(convertDay2 + ' ' + time2);
+            date2 = nDate2.getTime();
+        }
+    }
+    if (date2) {
+        return day >= date1 && day <= date2;
+    }
+    return day >= date1;
+};

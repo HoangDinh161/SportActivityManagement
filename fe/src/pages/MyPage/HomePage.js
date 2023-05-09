@@ -4,14 +4,14 @@ import clsx from 'clsx';
 import pageServices from '../../services/org-services/page-services';
 import { eventBus } from '../../services/helper';
 import { ToastContainer, toast } from 'react-toastify';
-import { convertDateTimeToLocaleString } from '../../services/helper/itemReducer';
+import { compareDate, convertDateTimeToLocaleString } from '../../services/helper/itemReducer';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 export function HomePage() {
     const [programs, setPrograms] = useState(['string']);
     const { orgSlug } = useParams();
     let navigate = useNavigate();
     useEffect(() => {
-        pageServices.getPublishPrograms().then(
+        pageServices.getPublishPrograms(orgSlug).then(
             (res) => {
                 console.log(res.data);
                 setPrograms(res.data);
@@ -35,6 +35,7 @@ export function HomePage() {
     return (
         <>
             {programs.map((program, index) => {
+                let isExpiry = true;
                 const { timeDetails, openRegister, regisRequire } = program;
                 let timeStart = {},
                     timeEnd = {};
@@ -45,7 +46,9 @@ export function HomePage() {
                     // console.log(priceOptions);
                     if (time) {
                         timeStart = convertDateTimeToLocaleString(time.startDate, time.startTime);
+                        console.log(timeStart);
                         if (time.endDate) timeEnd = convertDateTimeToLocaleString(time.endDate, time.endTime);
+                        isExpiry = compareDate(time.startDate, time.startTime, time.endDate, time.endTime);
                     }
                 }
 
@@ -59,8 +62,12 @@ export function HomePage() {
                                     </h5>
 
                                     <p>
-                                        <span>{program.subTitle ? program.subTitle : ' '}</span>
-                                        {program.location ? <span>&#8226; {program.location}</span> : ' '}
+                                        {program.subTitle ? (
+                                            <span>{program.subTitle}</span>
+                                        ) : (
+                                            <span>{program.title}</span>
+                                        )}
+                                        {program.location ? <span> &#8226; {program.location}</span> : ' '}
                                     </p>
                                     <div className={clsx(styles.displayTime)}>
                                         <p>
@@ -93,12 +100,18 @@ export function HomePage() {
                                 </div>
                                 {openRegister && (
                                     <div className={clsx('col-lg-2 ', styles.btnRegister)}>
-                                        <button
-                                            onClick={() => handleNavigate(program.slug)}
-                                            className="btn btn-primary"
-                                        >
-                                            Register
-                                        </button>
+                                        {isExpiry ? (
+                                            <button
+                                                onClick={() => handleNavigate(program.slug)}
+                                                className="btn btn-primary"
+                                            >
+                                                Register
+                                            </button>
+                                        ) : (
+                                            <button className="btn btn-primary" disabled>
+                                                Register
+                                            </button>
+                                        )}
                                     </div>
                                 )}
                             </div>

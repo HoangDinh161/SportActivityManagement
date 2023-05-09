@@ -1,4 +1,5 @@
 import api from '../api';
+import userServices from '../user-services';
 
 class MemberService {
     constructor() {
@@ -8,16 +9,15 @@ class MemberService {
         let path = this.url + id;
         return api.get(path);
     }
-    addMember(name, email) {
-        return api.post(url + 'add', {
-            name,
+    addMember(email) {
+        return api.post(this.url + 'add', {
             email,
+            orgId: userServices.getCurrentUser().org_id,
         });
     }
     deleteMember(memId) {
-        return api.delete(url + 'destroy', {
-            _id: memId,
-        });
+        const orgId = userServices.getCurrentUser().org_id;
+        return api.post(this.url + orgId + '/' + memId + '/delete');
     }
 }
 

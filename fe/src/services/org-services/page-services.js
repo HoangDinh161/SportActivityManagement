@@ -2,8 +2,8 @@ import api from '../api';
 import authServices from '../auth-services';
 
 class PageService {
-    getPublishPrograms() {
-        return api.post('/activities/publish-programs', {
+    getPublishPrograms(orgSlug) {
+        return api.post('/activities/' + orgSlug + '/publish-programs', {
             orgId: authServices.getCurrentUser().org_id,
         });
     }

@@ -34,15 +34,16 @@
 }
 .inner {
     padding-top: 115px;
-    margin-bottom: 150px;
+    margin-bottom: 30px;
     max-width: 70%;
     margin-left: auto;
     margin-right: auto;
+    min-height: 100vh;
     // padding-left: 55px;
 }
-.bg {
-    background-color: white;
-}
+// .bg {
+//     background-color: white;
+// }
 .formGroup {
     display: flex;
     flex-direction: column;

@@ -17,15 +17,11 @@ router.post(
     ProgramController.getRegisterRequire,
 );
 router.patch(
-    '/program/regis-req/:reqId/update',
+    '/program/regis-req/:programId/update',
     [auth.verifyToken, auth.hasOrg],
     ProgramController.updateRegisReq,
 );
-router.post(
-    '/publish-programs',
-    [auth.verifyToken, auth.hasOrg],
-    PageController.showPublishPrograms,
-);
+router.post('/:orgSlug/publish-programs', [auth.verifyToken], PageController.showPublishPrograms);
 router.get(
     '/program/:programSlug/get-register',
     [auth.verifyToken],

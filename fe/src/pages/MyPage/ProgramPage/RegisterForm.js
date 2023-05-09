@@ -25,7 +25,7 @@ export function RegisterForm() {
         const getProgramRegisterForm = () => {
             pageServices.getProgramRegister(programSlug).then(
                 (res) => {
-                    //console.log(res.data);
+                    console.log(res.data);
                     const registerReq = res.data.regisRequire;
                     setRegisReq({
                         ...registerReq,
@@ -119,7 +119,7 @@ export function RegisterForm() {
     return (
         <>
             <div className={clsx(styles.inner)}>
-                <div className={clsx(styles.RegisTitle)}>
+                <div className={clsx(styles.regisTitle)}>
                     <h1>Register</h1>
                     <p>{regisReq && regisReq.program && <span>{regisReq.program}</span>}</p>
                 </div>
@@ -180,21 +180,17 @@ export function RegisterForm() {
                                 required
                             >
                                 {regisReq.roles && regisReq.roles.individualPlayer && (
-                                    <option value="individual player" default>
+                                    <option value="Individual Player" default>
                                         Individual Player
                                     </option>
                                 )}
-                                {regisReq.roles && regisReq.roles.individualPlayer && (
-                                    <option value="team player">Team Player</option>
+                                {regisReq.roles && regisReq.roles.teamPlayer && (
+                                    <option value="Team Player">Team Player</option>
                                 )}
-                                {regisReq.roles && regisReq.roles.individualPlayer && (
-                                    <option value="coach">Coach</option>
-                                )}
-                                {regisReq.roles && regisReq.roles.individualPlayer && (
-                                    <option value="staff">Staff</option>
-                                )}
-                                {regisReq.roles && regisReq.roles.individualPlayer && (
-                                    <option value="individual">Others</option>
+                                {regisReq.roles && regisReq.roles.coach && <option value="Coach">Coach</option>}
+                                {regisReq.roles && regisReq.roles.staff && <option value="Staff">Staff</option>}
+                                {regisReq.roles && regisReq.roles.individual && (
+                                    <option value="Individual">Others</option>
                                 )}
                                 <option value="none">None</option>
                             </select>

@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import orgServices from '../../../services/org-services';
 import styles from './Member.module.scss';
 import { eventBus } from '../../../services/helper';
+import memberServices from '../../../services/org-services/member-services';
 export function Member() {
     const [members, setMembers] = useState([]);
     const [searchVal, setSearchVal] = useState('');
@@ -29,6 +30,25 @@ export function Member() {
         );
     }, []);
 
+    const handleDelete = (memId) => {
+        if (window.confirm('Are you sure you want to delete this member?')) {
+            memberServices.deleteMember(memId).then(
+                (res) => {
+                    window.location.reload();
+                },
+                (error) => {
+                    const resMessage =
+                        (error.response && error.response.data && error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+                    toast.error(resMessage);
+                    if (error.response && error.response.status === 403) {
+                        eventBus.dispatch('logout');
+                    }
+                },
+            );
+        }
+    };
     return (
         <>
             <h3>Members</h3>
@@ -81,7 +101,11 @@ export function Member() {
                                                             left: '-80px',
                                                         }}
                                                     >
-                                                        <li className="dropdown-item" style={{ fontSize: '0.85rem' }}>
+                                                        <li
+                                                            onClick={() => handleDelete(member.id)}
+                                                            className="dropdown-item"
+                                                            style={{ fontSize: '0.85rem' }}
+                                                        >
                                                             Delete
                                                         </li>
                                                     </ul>

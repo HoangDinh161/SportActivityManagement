@@ -52,7 +52,13 @@ class OrganizationController {
         Registration.find({ organization: req.body.orgId })
             .populate([{ path: 'program', select: 'title' }])
             .then((registrations) => {
-                res.json(registrations);
+                let listPrograms = [];
+                registrations.forEach((item) => {
+                    if (!listPrograms.includes(item.program.title)) {
+                        listPrograms.push(item.program.title);
+                    }
+                });
+                res.json({ registrations, listPrograms });
             })
             .catch(next);
     }
@@ -83,9 +89,68 @@ class OrganizationController {
             });
         });
     }
+    addMember(req, res) {
+        User.find().then((users, err) => {
+            if (err) {
+                return res.status(400).json({
+                    error: err,
+                });
+            }
+
+            let neededUser;
+            users.map((user) => {
+                if (user.userInfo && user.userInfo.email === req.body.email) {
+                    neededUser = user;
+                }
+            });
+            if (!neededUser) {
+                return res.status(401).json({ message: 'User not exist!' });
+            }
+            Organization.findById(req.body.orgId).then((org) => {
+                const members = org.members;
+                if (members.length > 0) {
+                    members.forEach((mem) => {
+                        if (neededUser._id.equals(mem.userMem)) {
+                            return res.status(402).json({ message: 'This member exists!' });
+                        }
+                    });
+                }
+
+                let dateJoin = new Date();
+                members.push({
+                    userMem: neededUser._id,
+                    timeJoined: dateJoin,
+                });
+                org.members = members;
+                org.save((err, org) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.status(200).json({ message: 'Successfull!' });
+                    }
+                });
+            });
+        });
+    }
     //Update
 
     //Delete
+    deleteMember(req, res) {
+        Organization.findById(req.params.orgId).then((org, err) => {
+            const members = org.members.filter((member) => {
+                return !member.userMem.equals(req.params.userId);
+            });
+
+            org.members = members;
+            org.save().then((org, err) => {
+                if (err) {
+                    res.status(401).json({ message: 'Fail!' });
+                } else {
+                    res.status(200).json({ message: 'Successful!' });
+                }
+            });
+        });
+    }
 }
 
 module.exports = new OrganizationController();

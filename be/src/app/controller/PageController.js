@@ -15,33 +15,37 @@ class PageController {
             });
     }
     showPublishPrograms(req, res) {
-        Program.find({ organization: req.body.orgId, publish: true })
-            .populate('regisRequire')
-            .then((programs) => {
-                const cvPrograms = programs.map((program, index) => {
-                    let {
-                        title,
-                        subtitle,
-                        location,
-                        regisRequire,
-                        timeDetails,
-                        openRegister,
-                        slug,
-                        type,
-                        ...rest
-                    } = program;
-                    return {
-                        title,
-                        subtitle,
-                        location,
-                        regisRequire,
-                        timeDetails,
-                        openRegister,
-                        slug,
-                        type,
-                    };
-                });
-                res.status(200).json(cvPrograms);
+        Organization.findOne({ slug: req.params.orgSlug })
+            .select('_id')
+            .then((org) => {
+                Program.find({ organization: org._id, publish: true })
+                    .populate('regisRequire')
+                    .then((programs) => {
+                        const cvPrograms = programs.map((program, index) => {
+                            let {
+                                title,
+                                subTitle,
+                                location,
+                                regisRequire,
+                                timeDetails,
+                                openRegister,
+                                slug,
+                                type,
+                                ...rest
+                            } = program;
+                            return {
+                                title,
+                                subTitle,
+                                location,
+                                regisRequire,
+                                timeDetails,
+                                openRegister,
+                                slug,
+                                type,
+                            };
+                        });
+                        res.status(200).json(cvPrograms);
+                    });
             });
     }
 

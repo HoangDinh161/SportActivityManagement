@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import orgServices from '../../../services/org-services';
 import { toast, ToastContainer } from 'react-toastify';
@@ -8,17 +8,19 @@ import styles from './Registration.module.scss';
 import registrationServices from '../../../services/org-services/registration-services';
 export function Registration() {
     const navigate = useNavigate();
-    
+    const [APIData, setData] = useState([]);
     const [registrations, setRegistrations] = useState([]);
     const [searchVal, setSearchVal] = useState('');
-    const [regisStatus, setStatus] = useState('');
-    const [filter, setFilter] = useState('All');
-
+    const [regisStatus, setStatus] = useState('all');
+    const [filter, setFilter] = useState('all');
+    const [listPrograms, setListPrograms] = useState([]);
     useEffect(() => {
         orgServices.getAllRegistrations().then(
             (res) => {
                 console.log(res.data);
-                setRegistrations(res.data);
+                setRegistrations(res.data.registrations);
+                setData(res.data.registrations);
+                setListPrograms(res.data.listPrograms);
             },
             (error) => {
                 const resMessage =
@@ -32,6 +34,35 @@ export function Registration() {
             },
         );
     }, []);
+    useEffect(() => {
+        let data = APIData;
+        if (regisStatus !== 'all') {
+            data = data.filter((item) => {
+                if (regisStatus === 'active') {
+                    return item.status === true;
+                }
+                return item.status === false;
+            });
+        }
+        if (filter !== 'all') {
+            data = data.filter((item) => {
+                return item.program.title === filter;
+            });
+        }
+        if (searchVal) {
+            data = data.filter((item) => {
+                const { userInfo, program, role } = item;
+                const convertForSearch = {
+                    name: userInfo.name,
+                    email: userInfo.email,
+                    ...program,
+                    role,
+                };
+                return Object.values(convertForSearch).join('').toLowerCase().includes(searchVal.toLowerCase());
+            });
+        }
+        setRegistrations(data);
+    }, [searchVal, filter, regisStatus]);
     const handleUpdateStatus = (_id, status) => {
         registrationServices.updateStatusRegistration(_id, status).then(
             (res) => {
@@ -65,12 +96,19 @@ export function Registration() {
                     />
                     <div className="select-option d-lg-flex">
                         <select className="form-select" onChange={(e) => setStatus(e.target.value)}>
-                            <option value="default">All</option>
+                            <option value="all">All</option>
                             <option value="active">Active</option>
                             <option value="cancel">Cancel</option>
                         </select>
                         <select className="form-select" onChange={(e) => setFilter(e.target.value)}>
-                            <option value="default">All</option>
+                            <option value="all">All</option>
+                            {listPrograms.map((item, index) => {
+                                return (
+                                    <option key={index} value={item}>
+                                        {item}
+                                    </option>
+                                );
+                            })}
                         </select>
                         {/* <div className={clsx(styles.createButton)}>
                             <button className="btn" onClick={handleCreate}>

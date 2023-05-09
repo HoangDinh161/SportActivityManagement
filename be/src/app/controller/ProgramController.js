@@ -106,14 +106,18 @@ class ProgramController {
         });
     }
     updateRegisReq(req, res) {
-        RegistrationRequire.updateOne({ program: req.params.reqId }, req.body.data, (err, mess) => {
-            if (err) {
-                res.status(500).send({ message: err });
-                return;
-            }
-            console.log(err);
-            res.status(200).json(mess);
-        });
+        RegistrationRequire.updateOne(
+            { program: req.params.programId },
+            req.body.data,
+            (err, mess) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+                console.log(err);
+                res.status(200).json(mess);
+            },
+        );
     }
 
     // updateActivity(req, res) {

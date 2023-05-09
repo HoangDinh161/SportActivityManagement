@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import clsx from 'clsx';
 import styles from './Schedule.module.scss';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -14,7 +14,7 @@ export function Schedule() {
     const [schedules, setSchedules] = useState([]);
     const [searchVal, setSearchVal] = useState('');
     const [sportVal, setSportVal] = useState('sport');
-    const [filterVal, setFilterVal] = useState('');
+    const [filterVal, setFilterVal] = useState('all');
     useEffect(() => {
         orgServices.getAllPrograms().then(
             (res) => {
@@ -45,17 +45,40 @@ export function Schedule() {
     // console.group('Search value change');
     // console.log('sport filter: ', sportVal);
     // console.groupEnd();
-    const searchItem = (value) => {
-        setSearchVal(value);
-        if (searchVal !== '') {
-            const filterData = programData.filter((item) => {
-                return Object.values(item).join('').toLowerCase().includes(value.toLowerCase());
+    // const searchItem = (value) => {
+    //     setSearchVal(value);
+    //     if (searchVal !== '') {
+    //         const filterData = programData.filter((item) => {
+    //             return Object.values(item).join('').toLowerCase().includes(value.toLowerCase());
+    //         });
+    //         setSchedules(filterData);
+    //     } else {
+    //         setSchedules(programData);
+    //     }
+    // };
+    useEffect(() => {
+        let data = programData;
+        if (sportVal !== 'sport') {
+            data = data.filter((item) => {
+                return item.sport === sportVal;
             });
-            setSchedules(filterData);
-        } else {
-            setSchedules(programData);
         }
-    };
+        if (filterVal !== 'all') {
+            data = data.filter((item) => {
+                if (filterVal === 'published') {
+                    return item.publish === true;
+                }
+                return item.publish === false;
+            });
+        }
+        if (searchVal) {
+            data = data.filter((item) => {
+                return Object.values(item).join('').toLowerCase().includes(searchVal.toLowerCase());
+            });
+        }
+        setSchedules(data);
+    }, [searchVal, sportVal, filterVal]);
+
     const handleCreate = () => {
         navigate('/organization/schedule/create');
     };
@@ -122,7 +145,7 @@ export function Schedule() {
                         type="text"
                         value={searchVal}
                         placeholder="Search"
-                        onChange={(e) => searchItem(e.target.value)}
+                        onChange={(e) => setSearchVal(e.target.value)}
                     />
                     <div className="select-option d-lg-flex">
                         <select className="form-select" onChange={(e) => setSportVal(e.target.value)}>

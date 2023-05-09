@@ -1,12 +1,13 @@
 import styles from './Page.module.scss';
 import clsx from 'clsx';
-import { convertDateTimeToLocaleString } from '../../../services/helper/itemReducer';
+import { compareDate, convertDateTimeToLocaleString } from '../../../services/helper/itemReducer';
 import { useLocation, useNavigate } from 'react-router-dom';
 export function ProgramProfile(props) {
     let navigate = useNavigate();
     let { pathname } = useLocation();
     const { location, timeDetails, registerRequire, openRegister, description } = props;
     console.log(props);
+    let isExpiry = true;
     let timeStart = {},
         timeEnd = {};
     let priceOptions = [];
@@ -17,6 +18,7 @@ export function ProgramProfile(props) {
         if (time) {
             timeStart = convertDateTimeToLocaleString(time.startDate, time.startTime);
             if (time.endDate) timeEnd = convertDateTimeToLocaleString(time.endDate, time.endTime);
+            isExpiry = compareDate(time.startDate, time.startTime, time.endDate, time.endTime);
         }
     }
     return (
@@ -52,10 +54,20 @@ export function ProgramProfile(props) {
                                     ))}
                                 </ul>
                             </div>
-                            <div className={clsx(styles.btnRegister, 'col-lg-2')}>
-                                <button onClick={() => navigate(pathname + '/register')} className="btn btn-primary">
-                                    Register
-                                </button>
+
+                            <div className={clsx('col-lg-2 ', styles.btnRegister)}>
+                                {isExpiry ? (
+                                    <button
+                                        onClick={() => navigate(pathname + '/register')}
+                                        className="btn btn-primary"
+                                    >
+                                        Register
+                                    </button>
+                                ) : (
+                                    <button className="btn btn-primary" disabled>
+                                        Register
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>

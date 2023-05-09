@@ -27,8 +27,8 @@ export function NewSche() {
         scheduleServices.createSche(title, sportVal, typeSche).then(
             (res) => {
                 console.log(res);
-                toast.success('Create Schedule Successfull', { autoClose: 2000 });
-                myVar = setTimeout(() => navigate('/organization/schedule'), 3000);
+                toast.success('Create Sport Program Successfull', { autoClose: 1500 });
+                myVar = setTimeout(() => navigate('/organization/schedule'), 1800);
             },
             (error) => {
                 const resMessage =

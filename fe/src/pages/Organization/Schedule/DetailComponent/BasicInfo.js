@@ -7,14 +7,14 @@ import scheduleServices from '../../../../services/org-services/schedule-service
 import { ToastContainer, toast } from 'react-toastify';
 import { eventBus } from '../../../../services/helper';
 export function BasicInfo() {
-    let { state } = useLocation();
+    //let { state } = useLocation();
     let { scheSlug } = useParams();
     const [title, setTitle] = useState('');
     const [subTitle, setSubTitle] = useState('');
     const [description, setDescription] = useState('');
     const [location, setLocation] = useState('');
     const [sport, setSport] = useState('');
-
+    const [type, setType] = useState('');
     useEffect(() => {
         scheduleServices.getScheDetail(scheSlug).then(
             (res) => {
@@ -25,6 +25,7 @@ export function BasicInfo() {
                 setDescription(detail.description);
                 setLocation(detail.location);
                 setSport(detail.sport);
+                setType(detail.type);
             },
             (error) => {
                 const resMessage =
@@ -112,7 +113,7 @@ export function BasicInfo() {
                 <div className={styles.formGroup}>
                     <label htmlFor="sport">Sport</label>
                     <select
-                        className={clsx(styles.formInput, 'form-control')}
+                        className={clsx(styles.formInput, 'form-select')}
                         id="sport"
                         value={sport}
                         onChange={(e) => setSport(e.target.value)}
@@ -125,6 +126,23 @@ export function BasicInfo() {
                                 </option>
                             );
                         })}
+                    </select>
+                </div>
+                <div className={clsx(styles.formGroup)}>
+                    <label htmlFor="typeSchedule">Type</label>
+                    <select
+                        name="typeSchedule"
+                        className={clsx(styles.formInput, 'form-select')}
+                        value={type}
+                        onChange={(e) => setType(e.target.value)}
+                    >
+                        <option value="tournament">Tournament</option>
+                        <option value="league">League</option>
+                        <option value="camp">Camp</option>
+                        <option value="class">Class</option>
+                        <option value="training">Training</option>
+                        <option value="event">Event</option>
+                        <option value="club">Club</option>
                     </select>
                 </div>
                 <div className={styles.formGroup}>

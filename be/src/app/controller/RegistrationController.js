@@ -15,42 +15,42 @@ class RegistrationController {
                 res.status(401).send({ message: 'You registered this program before!' });
                 return;
             }
-            Organization.findById(req.body.orgId)
-                .select('members')
-                .then(async (org) => {
-                    const members = org.members;
-                    const checkMem = (element) => {
-                        return element.userMem == req.body.userId;
+            console.log(req.body.orgId);
+            Organization.findById(req.body.orgId).then(async (org) => {
+                console.log(org);
+                const members = org.members;
+                const checkMem = (element) => {
+                    return element.userMem == req.body.userId;
+                };
+                if (!members.some(checkMem)) {
+                    let newDate = new Date();
+                    let nMember = {
+                        userMem: req.body.userId,
+                        timeJoined: newDate.toISOString(),
                     };
-                    if (!members.some(checkMem)) {
-                        let newDate = new Date();
-                        let nMember = {
-                            userMem: req.body.userId,
-                            timeJoined: newDate.toISOString(),
-                        };
-                        await Organization.updateOne(
-                            { id: req.body.orgId },
-                            { $push: { members: nMember } },
-                        );
-                    }
-                    let nRegistration = new Registration({
-                        _id: new mongoose.Types.ObjectId(),
-                        user: req.body.userId,
-                        program: req.body.programId,
-                        organization: req.body.orgId,
-                        ...req.body.data,
-                        status: true,
-                    });
-                    Promise.all([
-                        nRegistration.save(),
-                        Program.updateOne(
-                            { _id: req.body.programId },
-                            { $push: { registrations: nRegistration._id } },
-                        ),
-                    ]).then(([regis, proResult]) => {
-                        res.status(200).json({ regis, proResult });
-                    });
+                    await Organization.updateOne(
+                        { _id: req.body.orgId },
+                        { $push: { members: nMember } },
+                    );
+                }
+                let nRegistration = new Registration({
+                    _id: new mongoose.Types.ObjectId(),
+                    user: req.body.userId,
+                    program: req.body.programId,
+                    organization: req.body.orgId,
+                    ...req.body.data,
+                    status: true,
                 });
+                Promise.all([
+                    nRegistration.save(),
+                    Program.updateOne(
+                        { _id: req.body.programId },
+                        { $push: { registrations: nRegistration._id } },
+                    ),
+                ]).then(([regis, proResult]) => {
+                    res.status(200).json({ regis, proResult });
+                });
+            });
         });
     }
 

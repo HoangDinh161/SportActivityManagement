@@ -22,5 +22,12 @@ router.post(
     organizationController.showRegistrations,
 );
 router.post('/member', [auth.verifyToken, auth.hasOrg], organizationController.showMembers);
+router.post('/member/add', [auth.verifyToken, auth.hasOrg], organizationController.addMember);
+router.post(
+    '/member/:orgId/:userId/delete',
+    [auth.verifyToken],
+    organizationController.deleteMember,
+);
 router.get('/:orgSlug/get-info', [auth.verifyToken], PageController.showPageAboutInfo);
+
 module.exports = router;

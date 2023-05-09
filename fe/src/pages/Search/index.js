@@ -62,17 +62,27 @@ function Search() {
         );
     };
 
-    const searchItems = (val) => {
-        setSearchVal(val);
-        if (searchVal !== '') {
+    // const searchItems = (val) => {
+    //     setSearchVal(val);
+    //     if (searchVal !== '') {
+    //         const filterData = APIData.filter((item) => {
+    //             return Object.values(item).join('').toLowerCase().includes(val.toLowerCase());
+    //         });
+    //         setResults(filterData);
+    //     } else {
+    //         setResults(APIData);
+    //     }
+    // };
+    useEffect(() => {
+        if (searchVal) {
             const filterData = APIData.filter((item) => {
-                return Object.values(item).join('').toLowerCase().includes(val.toLowerCase());
+                return Object.values(item).join('').toLowerCase().includes(searchVal.toLowerCase());
             });
             setResults(filterData);
         } else {
             setResults(APIData);
         }
-    };
+    }, [searchVal]);
     return (
         <div className={clsx(styles.wrapper)}>
             <h2>
@@ -85,7 +95,7 @@ function Search() {
                         type="text"
                         value={searchVal}
                         placeholder="Search"
-                        onChange={(e) => searchItems(e.target.value)}
+                        onChange={(e) => setSearchVal(e.target.value)}
                     />
                     <select className="form-select" value={filter} onChange={(e) => setFilter(e.target.value)}>
                         <option value="program">Program</option>
