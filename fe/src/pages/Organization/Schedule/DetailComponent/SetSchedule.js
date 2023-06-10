@@ -13,25 +13,13 @@ const typeSchedules = [
     'PLAYOFF',
     'CHAMPIONSHIP',
     'TEAM_PRACTICE',
-    'SCRIMMAGE',
     'QUARTERFINALS',
     'SEMIFINALS',
     'FINAL',
     'FRIENDLY',
     'TOURNAMENT',
 ];
-const typeEvents = [
-    'Game',
-    'Tournament',
-    'Scrimmage',
-    'Practice',
-    ' Meeting',
-    'Class',
-    ' Camp',
-    'League',
-    'Training',
-    'Other',
-];
+const typeEvents = ['Game', 'Tournament', 'Practice', 'Meeting', 'Class', 'Camp', 'Training', 'Other'];
 export function SetUpSchedule() {
     let { state } = useLocation();
     const [curGame, setCurGame] = useState({});
